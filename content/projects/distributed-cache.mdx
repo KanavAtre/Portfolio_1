@@ -1,0 +1,132 @@
+---
+title: "Credify.ai"
+subtitle: "Real-time Reddit fact-checker (CalHacks 12.0)"
+description: "Chrome extension that injects UI into Reddit and scores comment credibility (0–10) using a multi-agent verification pipeline."
+date: "2025-10-15"
+image: "/Images/post.jpg"
+tags: ["Chrome Extension", "React", "OpenAI API", "News API", "Node.js", "MutationObserver", "Multi-Agent Systems"]
+github: "https://github.com/KanavAtre/MutationObserve"
+link: "https://devpost.com/software/credify-ai"
+featured: true
+---
+
+## Overview
+
+**Credify.ai** is a real-time Reddit fact-checking system that analyzes posts and comments as users scroll, verifies claims across trusted news sources, and assigns a **credibility score (0–10)** with structured reasoning.
+
+Built at **CalHacks 12.0**, the system combines:
+- UI injection into Reddit
+- distributed AI agents
+- external news verification
+- LLM-based reasoning
+- a unified scoring pipeline
+
+The goal is not censorship — it’s **signal**: helping users quickly distinguish verified information from misinformation.
+
+---
+
+## What It Does
+
+- Injects a live credibility panel directly into Reddit threads
+- Monitors dynamically loaded content using **MutationObserver**
+- Aggregates verification data from multiple news sources
+- Uses a **multi-agent architecture** to fetch, validate, and reason over sources
+- Produces an explainable credibility score with flags + summary
+
+---
+
+## System Architecture
+
+### UI Layer (Client)
+- Chrome extension injects React components into Reddit’s DOM
+- Real-time detection of new posts/comments via **MutationObserver**
+- Inline credibility UI rendered next to content
+
+### Agent Layer (Verification)
+- Independent news agents (e.g. NYT search agent)
+- Each agent exposes REST endpoints for structured querying
+- Agents fetch, normalize, and return structured article data
+
+### Gateway Layer (Orchestration)
+- Central gateway agent:
+  - routes queries to verification agents
+  - aggregates responses
+  - normalizes results into a unified schema
+  - forwards data to reasoning layer
+
+### Reasoning Layer (Scoring)
+- LLM agent consumes aggregated evidence
+- Produces:
+  - credibility score (0–10)
+  - risk flags
+  - short explanation summary
+
+
+---
+
+## Key Features
+
+- **Real-time analysis** of live Reddit content  
+- **Multi-agent verification** (distributed source querying)  
+- **Central orchestration layer** for aggregation + normalization  
+- **LLM-based reasoning** for scoring + explanation  
+- **Explainable output** (score + flags + summary, not just labels)  
+- **Non-intrusive UI injection** into Reddit threads  
+
+---
+
+## Tech Stack
+
+### Frontend
+- Chrome Extension  
+- React  
+- DOM injection + **MutationObserver**  
+- Axios  
+
+### Backend / Agents
+- **uAgents framework** (multi-agent system)
+- Node.js / Python services
+- REST-based agent communication
+- Gateway orchestration layer
+
+### Verification & Reasoning
+- News APIs (NYT + extensible sources)
+- OpenAI API (reasoning + scoring)
+- Structured aggregation pipeline
+
+---
+
+## Results
+
+- Real-time credibility scoring without page reloads  
+- Multi-source verification per claim  
+- Explainable outputs instead of binary labels  
+- Scalable architecture (new agents/sources plug in easily)  
+- Low-latency pipeline suitable for live browsing  
+
+---
+
+## Impact
+
+- Transforms passive browsing into **informed consumption**
+- Shifts fact-checking from manual search to **ambient verification**
+- Demonstrates how **multi-agent systems + LLM reasoning** can power consumer-facing trust infrastructure
+- Built as a **product system**, not just a demo model
+
+---
+
+## What I Learned
+
+- Designing **agent-based systems** instead of monolith services  
+- Orchestrating distributed verification pipelines  
+- Real-time UI injection into complex dynamic DOMs  
+- Turning LLMs into **structured reasoning engines**, not chatbots  
+- Building trust systems that prioritize **signal over censorship**
+
+---
+
+## Links
+
+- GitHub: https://github.com/KanavAtre/MutationObserve  
+- Devpost: https://devpost.com/software/credify-ai  
+

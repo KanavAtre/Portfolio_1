@@ -1,0 +1,141 @@
+---
+title: "PURT-UAS Biomed Drone Delivery"
+subtitle: "Overdose-response UAV with vision + autonomy"
+description: "ROS-based drone prototype using Intel RealSense depth + COCO vision for autonomy; implemented landing-zone detection via RANSAC plane fitting + safety metrics and explored RRT*/A* planning for real-time navigation."
+tags: ["ROS", "OpenCV", "Intel RealSense", "Depth Sensing", "RANSAC", "Point Clouds", "COCO", "RRT*", "A*"]
+image: "/Images/PURT.png"
+github: "https://github.com/KanavAtre/Biomed_Drone"
+featured: true
+---
+
+## Overview
+
+**PURT-UAS Biomed Drone Delivery** is a prototype overdose-response drone focused on **perception → safe landing decisions → navigation**.  
+My work centered on **depth + vision sensing** and **algorithmic decision-making**: selecting safe landing zones from point clouds and exploring planning methods like **RRT\*** / **A\*** for real-time pathfinding.
+
+## What I Built
+
+### 1) RealSense Depth + Frame Capture (Perception Input)
+
+I implemented a RealSense capture module to stream **aligned depth + color**, then derived sensor signals like **nearest obstacle distance** from depth data.
+
+```python
+import pyrealsense2 as rs
+import numpy as np
+import cv2
+
+class RealSenseCapture:
+    def __init__(self, width=1280, height=720, fps=30):
+        self.pipeline = rs.pipeline()
+        self.config = rs.config()
+        self.config.enable_stream(rs.stream.depth, width, height, rs.format.z16, fps)
+        self.config.enable_stream(rs.stream.color, width, height, rs.format.bgr8, fps)
+        self.align = rs.align(rs.stream.color)
+
+    def start(self):
+        profile = self.pipeline.start(self.config)
+        depth_sensor = profile.get_device().first_depth_sensor()
+        self.depth_scale = depth_sensor.get_depth_scale()
+        depth_sensor.set_option(rs.option.visual_preset, 3)  # accuracy preset
+
+    def get_frames(self):
+        frames = self.pipeline.wait_for_frames()
+        aligned = self.align.process(frames)
+        depth_frame = aligned.get_depth_frame()
+        color_frame = aligned.get_color_frame()
+        depth = np.asanyarray(depth_frame.get_data()).copy()
+        color = np.asanyarray(color_frame.get_data()).copy()
+        gray = cv2.cvtColor(color, cv2.COLOR_BGR2GRAY)
+        return gray, depth
+
+    def get_min_distance_cm(self):
+        frames = self.pipeline.wait_for_frames()
+        depth_frame = frames.get_depth_frame()
+        depth_img = np.asanyarray(depth_frame.get_data())
+        return float(np.min(depth_img * self.depth_scale) * 100.0)
+```
+
+### Tech Stack
+
+### Perception & Sensing
+- **Intel RealSense (pyrealsense2)** — aligned depth + RGB streaming  
+- **OpenCV** — image processing + preprocessing  
+- **NumPy** — point cloud construction and geometry  
+
+### Geometry & Decision Systems
+- **RANSAC Plane Fitting** — robust landing surface detection  
+- **Point Cloud Processing** — terrain modeling + height maps  
+- **Geometric Metrics** — slope, flatness, usable area, obstacle proximity  
+
+### Planning & Autonomy
+- **ROS** — robotics integration + autonomy stack  
+- **RRT\*** — sampling-based motion planning  
+- **A\*** — graph-based path planning baseline  
+- **Graph Algorithms** — navigation abstractions  
+
+### Visualization & Simulation
+- **Matplotlib (2D + 3D)** — point clouds, height maps, landing zones  
+- **Synthetic Terrain Generators** — realistic terrain + stress testing  
+
+---
+
+## Model Architecture
+
+### Perception → Geometry → Decision Pipeline
+
+
+---
+
+## Results
+
+### Landing Zone Detection
+- Robust plane detection under noisy and uneven terrain using **RANSAC**
+- Stable **LAND / ABORT** decisions based on:
+  - slope thresholds  
+  - surface flatness  
+  - inlier density  
+  - usable landing area  
+  - obstacle proximity  
+
+### Terrain Analysis
+- Generated realistic terrain with:
+  - hills  
+  - depressions  
+  - ridges  
+  - plateaus  
+- Validated landing detection across varied surface geometries using synthetic and semi-realistic terrain models
+
+### Planning
+- Demonstrated **RRT\*** behavior:
+  - tree expansion  
+  - rewiring optimization  
+  - cost reduction over iterations  
+  - feasible path extraction in continuous space  
+- Established a planning baseline for real-time autonomous navigation
+
+---
+
+## Impact
+
+- Converts raw depth + vision data into **actionable autonomy decisions**
+- Bridges perception, geometry, and planning into a unified pipeline
+- Provides a foundation for **safe autonomous biomedical deployment**
+- Demonstrates real-world robotics reasoning: not just models, but systems
+
+---
+
+## What I Learned
+
+- How to turn noisy perception into **reliable geometric decisions**
+- Why **RANSAC + inlier structure** matters more than raw model fitting
+- Practical tradeoffs between **A\*** (structured maps) vs **RRT\*** (continuous space)
+- The importance of **visualization-first debugging** in robotics systems
+- Designing autonomy as a **pipeline**, not a single model
+
+---
+
+## Links
+
+- GitHub: https://github.com/KanavAtre/Biomed_Drone
+
+

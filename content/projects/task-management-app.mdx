@@ -1,0 +1,88 @@
+---
+title: "BoilerFixIt"
+subtitle: "Full-stack maintenance & repair marketplace"
+description: "Platform connecting Purdue students with local service providers for repairs/maintenance, with secure auth, OTP verification, Stripe payments, and automated email flows."
+image: "/Images/logo.png"
+tags: ["React", "React Router", "MUI", "Node/Express", "MongoDB", "JWT", "Stripe"]
+github: "https://github.com/Shreyansh-t/Boiler-Fixit"
+featured: false
+---
+
+## Overview
+
+**BoilerFixIt** is a marketplace-style web app that connects **Purdue students** with **community service providers** for repairs and maintenance (appliances, small fixes, etc.).  
+The goal: make it frictionless to discover providers, request service, and handle checkout securely.
+
+## What It Does
+
+- Students can browse/request services and manage requests from a clean UI.
+- Providers can respond to requests and coordinate fulfillment.
+- Payments are handled through **Stripe** with a secure checkout flow.
+- Account security is handled with **JWT auth**, **bcrypt password hashing**, and **OTP verification**.
+
+## Key Features
+
+- **Authentication & Security**
+  - JWT-based login/session flow
+  - Password hashing with bcrypt
+  - OTP verification for account validation / sensitive actions
+
+- **Service Marketplace Flow**
+  - Service listings + request creation
+  - Request tracking and basic workflow state (submitted → in progress → completed)
+
+- **Payments**
+  - Stripe client integration using `@stripe/react-stripe-js`
+  - Clean handoff from frontend → backend for payment intent / confirmation
+
+- **Automated Emails**
+  - Transactional notifications (verification, confirmations, updates)
+
+## Tech Stack
+
+### Frontend (Repo)
+- **React (CRA)** + `react-scripts`
+- **React Router** for routing
+- **Material UI (MUI)** for UI components
+- **Stripe Elements** (`@stripe/react-stripe-js`, `@stripe/stripe-js`)
+- **Axios** for API calls
+- **React Hook Form** for form state/validation
+
+### Backend (Project)
+- **Node.js + Express**
+- **MongoDB + Mongoose**
+- **JWT Auth** + **bcrypt**
+- **OTP verification**
+- **Email pipelines** (transactional notifications)
+- **REST API** design + testing via Postman
+
+## Implementation Highlights
+
+### 1) Secure Auth (JWT + bcrypt)
+
+The backend issues JWTs after login, and protected routes validate the token. Passwords are hashed with bcrypt.
+
+- Hash passwords on signup / reset
+- Verify credentials on login
+- Store JWT in a secure client strategy (cookie-based is ideal; localStorage works but has tradeoffs)
+
+### 2) Stripe Checkout Flow
+
+Frontend uses Stripe Elements, then confirms payment using a backend-created PaymentIntent.
+
+```tsx
+// frontend (conceptual)
+const handlePay = async () => {
+  // 1) Create PaymentIntent on server
+  const { data } = await axios.post("/api/payments/create-intent", {
+    amount: totalCents,
+  })
+
+  // 2) Confirm payment in client with Stripe Elements
+  const result = await stripe.confirmCardPayment(data.clientSecret, {
+    payment_method: { card: elements.getElement(CardElement)! },
+  })
+
+  if (result.error) throw result.error
+  // 3) Success → update order/request status
+}
