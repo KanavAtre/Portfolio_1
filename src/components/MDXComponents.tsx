@@ -1,36 +1,26 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ReactNode } from 'react'
+import { ReactNode, AnchorHTMLAttributes, ImgHTMLAttributes, HTMLAttributes } from 'react'
+import type { MDXComponents as MDXComponentsType } from 'mdx/types'
 
-interface CodeBlockProps {
-  children: ReactNode
-  className?: string
-}
-
-function CodeBlock({ children, className }: CodeBlockProps) {
+function CodeBlock({ children, className, ...props }: HTMLAttributes<HTMLPreElement>) {
   return (
-    <pre className={`${className} overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm`}>
+    <pre className={`${className || ''} overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm`} {...props}>
       <code className="text-gray-100">{children}</code>
     </pre>
   )
 }
 
-interface CustomImageProps {
-  src: string
-  alt: string
-  width?: number
-  height?: number
-}
-
-function CustomImage({ src, alt, width = 800, height = 400 }: CustomImageProps) {
+function CustomImage({ src, alt, width, height, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
+  if (!src) return null
   return (
     <figure className="my-8">
       <div className="relative overflow-hidden rounded-lg">
         <Image
           src={src}
-          alt={alt}
-          width={width}
-          height={height}
+          alt={alt || ''}
+          width={Number(width) || 800}
+          height={Number(height) || 400}
           className="w-full object-cover"
         />
       </div>
@@ -43,12 +33,9 @@ function CustomImage({ src, alt, width = 800, height = 400 }: CustomImageProps) 
   )
 }
 
-interface CustomLinkProps {
-  href: string
-  children: ReactNode
-}
-
-function CustomLink({ href, children }: CustomLinkProps) {
+function CustomLink({ href, children, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {
+  if (!href) return <span {...props}>{children}</span>
+  
   const isInternal = href.startsWith('/') || href.startsWith('#')
 
   if (isInternal) {
@@ -65,6 +52,7 @@ function CustomLink({ href, children }: CustomLinkProps) {
       target="_blank"
       rel="noopener noreferrer"
       className="text-primary-600 hover:text-primary-700 underline"
+      {...props}
     >
       {children}
     </a>
@@ -90,10 +78,9 @@ function Callout({ children, type = 'info' }: CalloutProps) {
   )
 }
 
-export const MDXComponents = {
+export const MDXComponents: MDXComponentsType = {
   pre: CodeBlock,
   img: CustomImage,
-  Image: CustomImage,
   a: CustomLink,
   Callout,
 }
