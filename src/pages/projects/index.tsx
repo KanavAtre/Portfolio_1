@@ -21,7 +21,7 @@ export default function ProjectsPage({ projects, tags }: ProjectsPageProps) {
   return (
     <>
       <Head>
-        <title>Projects | Your Name</title>
+        <title>Projects | Kanav Atre</title>
         <meta name="description" content="Browse my portfolio of projects in systems, ML, and web development." />
       </Head>
 
