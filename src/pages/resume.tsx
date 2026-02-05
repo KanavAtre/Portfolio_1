@@ -24,7 +24,7 @@ export default function ResumePage() {
 
           {/* Download Button */}
           <a
-            href="/resume.pdf"
+            href="/Kanav_Atre_Resume.pdf"
             download
             className="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors text-lg"
           >
