@@ -6,7 +6,7 @@ export default function ResumePage() {
   return (
     <>
       <Head>
-        <title>Resume | Your Name</title>
+        <title>Resume | Kanav Atre </title>
         <meta name="description" content="Download my resume or view my professional experience." />
       </Head>
 
