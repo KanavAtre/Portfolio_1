@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+    .stack-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.slime-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slime-background {
+    display: none;
+  }
+}
+  .stack-heading {
+    font-size: clamp(38px, 6vw, 64px);
+    font-weight: 750;
+    letter-spacing: -2.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .stack-description {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 44px;
+  }
+
+  .stack-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 18px;
+  }
+
+  .tech-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 75px;
+  }
+
+  .tech-tag {
+    padding: 12px 20px;
+    background: #f6f6f6;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+
+  .tech-tag:nth-child(3n) {
+    transform: rotate(-3deg);
+  }
+
+  .tech-tag:nth-child(4n) {
+    transform: rotate(3deg);
+  }
+
+  .tech-tag:hover {
+    transform: rotate(0deg) translateY(-7px) scale(1.06);
+    background: #151515;
+    color: white;
+    border-color: #151515;
+  }
+
+  .interest-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .interest-card {
+    padding: 30px;
+    min-height: 170px;
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    transition: all 0.25s ease;
+  }
+
+  .interest-card:hover {
+    background: #171717;
+    color: white;
+    transform: translateY(-5px);
+  }
+
+  .interest-number {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 24px;
+  }
+
+  .interest-title {
+    font-size: 24px;
+    font-weight: 650;
+    letter-spacing: -0.7px;
+  }
+
+  .interest-desc {
+    font-size: 14px;
+    opacity: 0.65;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .interest-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<main class="stack-section">
+    <canvas id="slime-canvas" class="slime-background"></canvas>
+  <h1 class="stack-heading">
+    Things I build with<span style="color: #999">.</span><br />
+    Things I think about<span style="color: #999">.</span>
+  </h1>
+
+  <p class="stack-description">
+    A collection of tools I use and problems I find interesting.
+  </p>
+
+  <div class="stack-label">01 / Technologies</div>
+
+  <div class="tech-cloud">
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">C++</span>
+    <span class="tech-tag">PostgreSQL</span>
+    <span class="tech-tag">PyTorch</span>
+    <span class="tech-tag">Docker</span>
+    <span class="tech-tag">Kubernetes</span>
+    <span class="tech-tag">AWS</span>
+    <span class="tech-tag">ClickHouse</span>
+    <span class="tech-tag">Kafka</span>
+    <span class="tech-tag">FastAPI</span>
+    <span class="tech-tag">Scikit-learn</span>
+    <span class="tech-tag">Git</span>
+    <span class="tech-tag">SQLAlchemy</span>
+    <span class="tech-tag">Linux</span>
+  </div>
+
+  <div class="stack-label">02 / Current Obsessions</div>
+
+  <div class="interest-grid">
+    <div class="interest-card">
+      <div class="interest-number">001</div>
+      <div class="interest-title">Database Systems</div>
+      <div class="interest-desc">
+        Query optimization, retrieval, and semantic stuff.
+      </div>
+    </div>
+
+    <div class="interest-card">
+      <div class="interest-number">002</div>
+      <div class="interest-title">Applied AI</div>
+      <div class="interest-desc">
+        Connection of LLM optimizations (like vLLM) to operating systems stuff.
+      </div>
+    </div>
+
+    <div class="interest-card">
+      <div class="interest-number">003</div>
+      <div class="interest-title">Robotics & Perception</div>
+      <div class="interest-desc">
+        Connecting software intelligence with the physical world.
+      </div>
+    </div>
+
+    <div class="interest-card">
+      <div class="interest-number">004</div>
+      <div class="interest-title">Machine Learning and Time Series</div>
+      <div class="interest-desc">
+        Data analysis and modelling
+      </div>
+    </div>
+  </div>
+</main>
+
+</main>
+
+<script src="{{ url_for('scripts', path='/slime.js') }}" defer></script>
+{% endblock content %}

@@ -1,0 +1,91 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="contact-container">
+  <div class="contact-card">
+
+    <h2 class="contact-title">Get in touch</h2>
+    <p class="contact-subtitle">
+      Have a question or something to share?
+      I'd love to hear from you.
+    </p>
+
+    {% if error_code == 1 %}
+    <div class="alert alert-danger error-message" role="alert">
+      Please fill in all fields before submitting.
+    </div>
+    {% elif error_code == 2 %}
+    <div class="alert alert-danger error-message" role="alert">
+      Please enter a valid email address.
+    </div>
+    {% elif error_code == 3 %}
+    <div class="alert alert-danger error-message" role="alert">
+      Your message exceeds the 1000-character limit.
+      Please shorten it and try again.
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('fetch_form_details') }}" method="post">
+
+      <div class="mb-4">
+        <label for="name" class="form-label">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          value="{{ name | default('', true) }}"
+          placeholder="Your name"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label for="email" class="form-label">Email Address</label>
+        <input
+          type="email"
+          class="form-control {% if error_code == 2 %}is-invalid{% endif %}"
+          id="email"
+          name="email"
+          value="{{ email | default('', true) }}"
+          placeholder="you@example.com"
+          required
+        />
+        {% if error_code == 2 %}
+        <div class="invalid-feedback">
+          Please provide a valid email address.
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="mb-4">
+        <label for="message" class="form-label">Message</label>
+        <textarea
+          class="form-control {% if error_code == 3 %}is-invalid{% endif %}"
+          id="message"
+          name="message"
+          rows="5"
+          placeholder="Write your message here..."
+          required
+        >{{ message | default('', true) }}</textarea>
+
+        {% if error_code == 3 %}
+        <div class="invalid-feedback">
+          Maximum allowed length is 1000 characters.
+        </div>
+        {% endif %}
+
+        <div class="form-text">
+          Maximum 1000 characters.
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-dark submit-btn">
+        Send Message
+      </button>
+
+    </form>
+  </div>
+</div>
+{% endblock content %}

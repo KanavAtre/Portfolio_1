@@ -1,0 +1,38 @@
+
+<header class="portfolio-nav">
+  <a href="{{ url_for('homepage') }}">Home ↗</a>
+  <span>|</span>
+  <a href="https://github.com/KanavAtre" target="_blank" rel="noopener noreferrer">
+    GitHub ↗
+  </a>
+  <span>|</span>
+  <a href="https://www.linkedin.com/in/kanav-atre-759693207/" target="_blank" rel="noopener noreferrer">
+    LinkedIn ↗
+  </a>  
+</header>
+
+<style>
+  .portfolio-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .portfolio-nav a {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .portfolio-nav a:hover {
+    color: #888;
+  }
+
+  .portfolio-nav span {
+    color: #aaa;
+  }
+</style>

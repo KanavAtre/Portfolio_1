@@ -1,0 +1,140 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<main style="max-width: 1000px; margin: 50px auto; padding: 0 20px;">
+
+  <div style="display: grid; gap: 18px;">
+
+    {% for project in projects %}
+
+    <div
+      style="
+        padding: 26px 28px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.025);
+      "
+    >
+
+      <div style="display: flex; justify-content: space-between; gap: 24px;">
+
+        <div style="flex: 1; min-width: 0;">
+
+          <!-- Title + Technologies -->
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 10px;
+              margin-bottom: 12px;
+            "
+          >
+            <h3
+              style="
+                font-size: 19px;
+                font-weight: 600;
+                margin: 0 8px 0 0;
+                color: #20242a;
+              "
+            >
+              {{ project.title }}
+            </h3>
+
+            {% for tech in project.technologies %}
+            <span
+              style="
+                font-size: 11px;
+                font-weight: 500;
+                padding: 4px 9px;
+                border-radius: 5px;
+                background: #f3f4f6;
+                color: #555;
+                border: 1px solid #e9ecef;
+              "
+            >
+              {{ tech }}
+            </span>
+            {% endfor %}
+          </div>
+
+          <!-- Description -->
+          <p
+            style="
+              font-size: 14px;
+              color: #606b79;
+              line-height: 1.7;
+              margin-bottom: 12px;
+            "
+          >
+            {{ project.description }}
+          </p>
+
+          <!-- Markdown Content -->
+          {% if project.content %}
+          <div
+            style="
+              font-size: 14px;
+              color: #606b79;
+              line-height: 1.7;
+            "
+          >
+            {{ project.content | safe }}
+          </div>
+          {% endif %}
+
+        </div>
+
+        <!-- Optional Image -->
+        {% if project.image %}
+        <img
+          src="{{ project.image }}"
+          alt="{{ project.title }}"
+          loading="lazy"
+          style="
+            width: 130px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            flex-shrink: 0;
+          "
+        />
+        {% endif %}
+
+      </div>
+
+      <!-- Footer Links -->
+      {% if project.github %}
+      <div
+        style="
+          margin-top: 20px;
+          padding-top: 14px;
+          border-top: 1px solid #f1f2f4;
+        "
+      >
+        <a
+          href="{{ project.github }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            text-decoration: none;
+          "
+        >
+          GitHub ↗
+        </a>
+      </div>
+      {% endif %}
+
+    </div>
+
+    {% endfor %}
+  </div>
+</main>
+
+{% endblock content %}

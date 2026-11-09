@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block content %}
+
+<style>
+  .pdf-container {
+    width: 100%;
+    height: 80vh; /* Sets viewer height to 80% of the viewport */
+    border: none;
+  }
+</style>
+
+<body>
+  <p>
+    <a
+      href="https://drive.google.com/file/d/1s36Tpe9b-JfD87Es1LQu34RpsPnMYZke/view?usp=sharing"
+      target="_blank"
+      >Download/Open PDF directly</a
+    >
+  </p>
+  <iframe
+    class="pdf-container"
+    src="{{doc_path}}"
+    title="PDF Document Viewer"
+  ></iframe>
+  {% endblock content %}
+</body>
