@@ -10,6 +10,7 @@ from pages.projects.projects import projects
 from pages.resume import resume
 from pages.experience import experience
 from pages.technologies import technologies
+from pages.personal import personal
 
 temp = Jinja2Templates(directory="templates")  
 
@@ -19,6 +20,7 @@ routes = [
     Route("/resume", endpoint=resume, methods=["GET", "POST"]),
     Route("/experience", endpoint=experience, methods=["GET", "POST"]),
     Route("/technologies", endpoint=technologies, methods=["GET", "POST"]),
+    Route("/personal", endpoint=personal),
 ]
 
 app = Starlette(
