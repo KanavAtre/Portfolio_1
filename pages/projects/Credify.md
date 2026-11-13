@@ -1,6 +1,6 @@
 ---
 title: Credify
-description: AI powered real time fact checking and credibilty analysis app for Reddit
+description: Chrome extension that scores the credibility of Reddit posts in real time.
 technologies:
   - JavaScript
   - Chrome Extensions
@@ -12,4 +12,6 @@ github: https://github.com/KanavAtre/MutationObserve
 image: assets/static/images/credify.jpeg
 ---
 
-Got good learning on making real time information validation fast and reliable. Focused on agent orchestration and good agent feedback loop. Got good accuracies for most politically motivated reddit posts.
+A multi-agent backend built on Fetch.ai uAgents gathers live context for a post, retrieves related New York Times coverage, and has an LLM score credibility against a JSON schema. Results are served over a REST API.
+
+A Manifest V3 extension watches Reddit with a MutationObserver and injects a React dashboard into each post, caching analyses so repeat views are instant.

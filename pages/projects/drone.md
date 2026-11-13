@@ -1,6 +1,6 @@
 ---
 title: Biomed Delivery Drone
-description: A drone designed to deliver medicines in time-critical situations.
+description: Drone software for delivering medicine in time-critical situations.
 technologies:
   - Python
   - Gazebo
@@ -13,4 +13,6 @@ github: https://github.com/KanavAtre/Biomed_Drone
 image: /assets/static/images/drone2.jpg
 ---
 
-Worked mostly on the software for landing decision pipeline of the drone. Tried to do quick ML inference, but ended up mostly using heuristic algorithms for object avoidance and path selection. Was very cool to interact with the hardware
+Worked on the landing decision pipeline, which uses depth camera point clouds to pick a safe landing spot and a path around obstacles. Built with ROS and tested in Gazebo simulation and on real hardware.
+
+Tried ML inference for speed, but ended up relying mostly on heuristic algorithms for obstacle avoidance and path selection.
