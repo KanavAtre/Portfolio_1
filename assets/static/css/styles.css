@@ -241,3 +241,24 @@ textarea.form-control { resize: vertical; min-height: 130px; }
     height: 80px;
   }
 }
+/* Projects page: cards with staggered fade-up */
+.proj-list { max-width: 1000px; margin: 50px auto; padding: 0 20px; display: grid; gap: 18px; }
+.proj { padding: 26px 28px; border: 1px solid #e5e7eb; border-radius: 12px; background: var(--surface); box-shadow: 0 4px 16px rgba(0,0,0,.025); transition: border-color .2s, box-shadow .2s; }
+.proj:hover { border-color: #cfd8e3; box-shadow: 0 8px 24px rgba(24,35,50,.06); }
+.proj-main { display: flex; justify-content: space-between; gap: 24px; }
+.proj-info { flex: 1; min-width: 0; }
+.proj-head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.proj-title { font-size: 19px; font-weight: 600; margin: 0 8px 0 0; color: var(--text); }
+.proj-tag { font-size: 11px; font-weight: 500; padding: 4px 9px; border-radius: 5px; background: #f3f4f6; color: #555; border: 1px solid #e9ecef; }
+.proj-desc, .proj-text { font-size: 14px; color: #606b79; line-height: 1.7; }
+.proj-desc { margin-bottom: 12px; }
+.proj-text p:last-child { margin-bottom: 0; }
+.proj-img { width: 130px; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; flex-shrink: 0; }
+.proj-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #f1f2f4; font-size: 13px; font-weight: 500; }
+.proj-footer a { color: #374151; }
+/* Hidden only when JS is running, so the page still works without it */
+.js .proj.reveal { opacity: 0; }
+.js .proj.reveal.in { animation: proj-fade-up .6s cubic-bezier(.22, .61, .36, 1) both; animation-delay: var(--d, 0ms); }
+@keyframes proj-fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js .proj.reveal, .js .proj.reveal.in { opacity: 1; animation: none; } }
+@media (max-width: 576px) { .proj { padding: 20px 18px; } .proj-main { flex-direction: column; } }
